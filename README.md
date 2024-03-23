@@ -38,6 +38,19 @@ git clone https://github.com/roadrunner2/macbook12-spi-driver.git /usr/src/apple
 dkms install -m applespi -v 0.1
 ```
 
+If after reboot the touchbar still doesn't light up, try the following:
+
+1. Test if motprobe command is successful (exit code 0)
+```
+sudo modprobe intel_lpss_pci spi_pxa2xx_platform applespi apple-ib-tb
+
+```
+2. If so, rebind USB drivers:
+```
+echo '1-3' | sudo tee /sys/bus/usb/drivers/usb/unbind
+echo '1-3' | sudo tee /sys/bus/usb/drivers/usb/bind
+```
+
 Akmods module (RPM Fusion / Red Hat & co):
 ------------------------------------------
 You can build the akmod package from this repository:
